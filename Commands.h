@@ -52,7 +52,8 @@ public:
     void operator()(Memory &mem, Registers &regs) const noexcept override
     {
         unsigned short printAddress = GetAddress(regs);
-        data strSz{mem.GetData(printAddress)};
+        data strSz{};
+        strSz = mem.GetData(printAddress);
         printAddress += sizeof(strSz);
         for (int i = 0; i < strSz.integer; ++i)
             std::cout << (char)mem.GetData(i + printAddress).integer;
