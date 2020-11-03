@@ -56,6 +56,7 @@ void Processor::InitCommands()
 
     commands[movrr] = new MoveRR();
     commands[movrs] = new MoveRS();
+    commands[movsr] = new MoveSR();
     //commands[ldstr] = new LoadString();
     //commands[prtstr] = new PrintString();
 }

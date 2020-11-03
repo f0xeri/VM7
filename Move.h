@@ -23,4 +23,12 @@ class MoveRS : public Move
     }
 };
 
+class MoveSR : public Move
+{
+public: void operator()(Memory &mem, Registers &regs) const noexcept override
+    {
+        mem.LoadData(regs.currentCommand.address, regs.grp.GetData(regs.currentCommand.cmd.r1));
+    }
+};
+
 #endif //VM7_MOVE_H

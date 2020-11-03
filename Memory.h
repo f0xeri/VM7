@@ -12,14 +12,14 @@
 class Memory
 {
 public:
-    Memory() {}
-    ~Memory() { }
+    Memory() { memory = new int32_t[65536]{}; }
+    ~Memory() { delete[] memory; }
 
     void LoadData(uint16_t address, const data &dat);
     void LoadData(uint16_t a, MemUnion dat, int n);
     data GetData(uint16_t address) noexcept;
 
-    int32_t memory[65536];
+    int32_t *memory;
 };
 
 

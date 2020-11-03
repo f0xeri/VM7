@@ -26,7 +26,7 @@ public:
         radd = 11, rsub = 12, rmul = 13, rdiv = 14,
         iand = 15, ior = 16, ixor = 17, inot = 19,
         uiand = 19, uior = 20, uixor = 21, uinot = 22,
-        movrr = 23, movrs = 24,
+        movrr = 23, movrs = 24, movsr = 25,
         ldstr, prtstr
     };
     Memory memory;
