@@ -4,6 +4,7 @@
 
 #include "Processor.h"
 #include "IntegerMath.h"
+#include "RealMath.h"
 
 Processor::Processor()
 {
@@ -33,10 +34,23 @@ void Processor::InitCommands()
 {
     commands.assign(128, nullptr);
     commands[stop] = new Stop();
+
     commands[iadd] = new IntAddRR();
     commands[isub] = new IntSubRR();
     commands[imul] = new IntMulRR();
     commands[idiv] = new IntDivRR();
+    commands[imod] = new IntModRR();
+
+    commands[uiadd] = new UIntAddRR();
+    commands[uisub] = new UIntSubRR();
+    commands[uimul] = new UIntMulRR();
+    commands[uidiv] = new UIntDivRR();
+    commands[uimod] = new UIntModRR();
+
+    commands[radd] = new RealAddRR();
+    commands[rsub] = new RealSubRR();
+    commands[rmul] = new RealMulRR();
+    commands[rdiv] = new RealDivRR();
     //commands[ldstr] = new LoadString();
     //commands[prtstr] = new PrintString();
 }

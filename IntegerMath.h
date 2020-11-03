@@ -43,6 +43,14 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
         regs.grp.LoadData(regs.currentCommand.cmd.r2, data{regs.grp.GetData(regs.currentCommand.cmd.r1).integer / regs.grp.GetData(regs.currentCommand.cmd.r2).integer});
     }
 };
+
+class IntModRR : public IntegerMath
+{
+public: void operator()(Memory &mem, Registers &regs) const noexcept override
+    {
+        regs.grp.LoadData(regs.currentCommand.cmd.r2, data{regs.grp.GetData(regs.currentCommand.cmd.r1).integer % regs.grp.GetData(regs.currentCommand.cmd.r2).integer});
+    }
+};
 /**********************************************************************************************************************/
 
 class UIntegerMath : public Math
@@ -86,6 +94,16 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
         data temp{};
         temp.uinteger = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger / regs.grp.GetData(regs.currentCommand.cmd.r2).uinteger;
+        regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
+    }
+};
+
+class UIntModRR : public IntegerMath
+{
+public: void operator()(Memory &mem, Registers &regs) const noexcept override
+    {
+        data temp{};
+        temp.uinteger = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger % regs.grp.GetData(regs.currentCommand.cmd.r2).uinteger;
         regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
     }
 };

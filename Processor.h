@@ -17,14 +17,16 @@ class Processor
     Registers regs;
     std::vector<Command*> commands;
 
-
 public:
     enum opcodes
     {
         stop,
-        iadd, isub, imul, idiv, imod, iin, iout,
-        radd, rsub, rmul, rdiv, rin, rout,
-        iand, ior, ixor, inot, ldstr, prtstr
+        iadd, isub, imul, idiv, imod,
+        uiadd, uisub, uimul, uidiv, uimod,
+        radd, rsub, rmul, rdiv,
+        iand, ior, ixor, inot,
+        uiand, uior, uixor, uinot,
+        ldstr, prtstr
     };
     Memory memory;
     Processor();
