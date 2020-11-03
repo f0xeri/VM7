@@ -19,6 +19,5 @@ data Memory::GetData(uint16_t address) noexcept
 
 void Memory::LoadData(uint16_t a, MemUnion dat, int n)
 {
-    for (int i = a, k = 0; i < a + n; ++i, ++k)
-        memory[i] = dat.bytes[k];
+    for (int i = a, k = 0; i < a + n; ++i, ++k) memory[i] = dat.bytes[k];
 }

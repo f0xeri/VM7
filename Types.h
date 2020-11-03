@@ -23,6 +23,7 @@ struct command32
 union data
 {
     int integer;
+    unsigned int uinteger;
     float real;
 };
 

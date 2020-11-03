@@ -27,7 +27,64 @@ class Stop : public Command
     public: void operator()(Memory &mem, Registers &regs) const noexcept override {}
 };
 
-class LoadString : public Command
+// in type 0 address
+// in 1 0 32000
+class Input : public Command
+{
+    public: void operator()(Memory &mem, Registers &regs) const noexcept override
+    {
+        auto type = regs.currentCommand.cmd.r1;
+        data temp{};
+        switch (type)
+        {
+            case 0:
+                std::cin >> temp.integer;
+                break;
+            case 1:
+                std::cin >> temp.uinteger;
+                break;
+            case 2:
+                std::cin >> temp.real;
+                break;
+            default:
+                std::cin >> temp.integer;
+                break;
+        }
+        mem.LoadData(regs.currentCommand.address, temp);
+    }
+};
+
+class Output : public Command
+{
+    public: void operator()(Memory &mem, Registers &regs) const noexcept override
+    {
+        auto type = regs.currentCommand.cmd.r1;
+        switch (type)
+        {
+            case 0:
+                std::cout << mem.GetData(regs.currentCommand.address).integer;
+                break;
+            case 1:
+                std::cout << mem.GetData(regs.currentCommand.address).uinteger;
+                break;
+            case 2:
+                std::cout << mem.GetData(regs.currentCommand.address).real;
+                break;
+            default:
+                std::cout << mem.GetData(regs.currentCommand.address).integer;
+                break;
+        }
+    }
+};
+
+class Math : Command
+{
+    public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
+};
+
+/**********************************************************************************************************************/
+/* тут строки */
+/*class LoadString : public Command
 {
 public:
     void operator()(Memory &mem, Registers &regs) const noexcept override
@@ -38,9 +95,8 @@ public:
 
         data strSz{};
         strSz.integer = static_cast<int>(temp.size());
+        regs.grp.LoadData(regs.currentCommand.cmd.r1, strSz);
         unsigned short loadAddress = GetAddress(regs);
-        mem.LoadData(loadAddress, strSz);
-        loadAddress += sizeof(strSz);
         for (int i = 0; i < strSz.integer; ++i)
             mem.LoadData(i + loadAddress, data{temp[i]});
     }
@@ -53,10 +109,9 @@ public:
     {
         unsigned short printAddress = GetAddress(regs);
         data strSz{};
-        strSz = mem.GetData(printAddress);
-        printAddress += sizeof(strSz);
+        strSz = regs.grp.GetData(regs.currentCommand.cmd.r2);
         for (int i = 0; i < strSz.integer; ++i)
             std::cout << (char)mem.GetData(i + printAddress).integer;
     }
-};
+};*/
 #endif //VM7_COMMANDS_H
