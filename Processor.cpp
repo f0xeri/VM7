@@ -35,7 +35,9 @@ void Processor::SetIP(unsigned short address)
 void Processor::InitCommands()
 {
     commands.assign(128, nullptr);
-    commands[stop] = new Stop();
+
+    commands[in] = new Input();
+    commands[out] = new Output();
 
     commands[iadd] = new IntAddRR();
     commands[isub] = new IntSubRR();
@@ -57,6 +59,8 @@ void Processor::InitCommands()
     commands[movrr] = new MoveRR();
     commands[movrs] = new MoveRS();
     commands[movsr] = new MoveSR();
+
+    commands[stop] = new Stop();
     //commands[ldstr] = new LoadString();
     //commands[prtstr] = new PrintString();
 }

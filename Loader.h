@@ -61,7 +61,7 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
                 ss >> loadAddress;
                 break;
             case prefixes::cmd:
-                ss >> opcode;
+                ss >> std::oct >> opcode;
                 ss >> r1;
                 ss >> r2;
                 cmd16.opcode = opcode;

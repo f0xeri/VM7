@@ -18,7 +18,7 @@ class Processor
     std::vector<Command*> commands;
 
 public:
-    enum opcodes
+    /*enum opcodes
     {
         stop = 0,
         iadd = 1, isub = 2, imul = 3, idiv = 4, imod = 5,
@@ -28,6 +28,17 @@ public:
         uiand = 19, uior = 20, uixor = 21, uinot = 22,
         movrr = 23, movrs = 24, movsr = 25,
         ldstr, prtstr
+    };*/
+    enum opcodes
+    {
+        in = 001, out = 002,
+        iadd = 010, uiadd = 011, radd = 012,
+        isub = 020, uisub = 021, rsub = 022,
+        imul = 030, uimul = 031, rmul = 032,
+        idiv = 040, uidiv = 041, rdiv = 042, imod = 043, uimod = 044,
+        iand = 050, ior = 051, ixor = 052,
+        movrr = 060, movrs = 061, movsr = 062,
+        stop = 077
     };
     Memory memory;
     Processor();
