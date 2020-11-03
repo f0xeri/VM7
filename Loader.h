@@ -15,7 +15,7 @@
 enum prefixes
 {
     ip = 's',
-    cmd = 'C',
+    cmd = 'c',
     comment = ';',
     loadAddress = 'l',
     integer = 'i',
@@ -64,7 +64,6 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
                 ss >> opcode;
                 ss >> r1;
                 ss >> r2;
-
                 cmd16.opcode = opcode;
                 cmd16.r1 = r1;
                 cmd16.r2 = r2;
@@ -74,7 +73,6 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
                     ss >> address;
                     cmd32.cmd = cmd16;
                     cmd32.address = address;
-
                     memUnion.cmd32 = cmd32;
                     cpu.memory.LoadData(loadAddress, memUnion, 1);
                 }
@@ -83,22 +81,22 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
                     memUnion.cmd16 = cmd16;
                     cpu.memory.LoadData(loadAddress, memUnion, 1);
                 }
-                loadAddress += sizeof(MemUnion);
+                loadAddress += sizeof(MemUnion) / 4;
                 break;
             case prefixes::integer:
                 ss >> dat.integer;
                 cpu.memory.LoadData(loadAddress, dat);
-                loadAddress += sizeof(dat);
+                loadAddress += sizeof(dat) / 4;
                 break;
             case prefixes::uinteger:
                 ss >> dat.uinteger;
                 cpu.memory.LoadData(loadAddress, dat);
-                loadAddress += sizeof(dat);
+                loadAddress += sizeof(dat) / 4;
                 break;
             case prefixes::real:
                 ss >> dat.real;
                 cpu.memory.LoadData(loadAddress, dat);
-                loadAddress += sizeof(dat);
+                loadAddress += sizeof(dat) / 4;
                 break;
             case prefixes::comment:
             default:

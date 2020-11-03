@@ -1,7 +1,4 @@
-#include <iostream>
 #include "Processor.h"
-#include "Commands.h"
-#include "Registers.h"
 #include "Loader.h"
 
 int main()
