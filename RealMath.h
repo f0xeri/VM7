@@ -2,17 +2,17 @@
 // Created by Yaroslav on 03.11.2020.
 //
 
-#ifndef VM7_REAL_H
-#define VM7_REAL_H
+#ifndef VM7_REALMATH_H
+#define VM7_REALMATH_H
 
 #include "Commands.h"
 
-class RealMath : Math
+class RealMath : public Math
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
 };
 
-class RealAddRR : RealMath
+class RealAddRR : public RealMath
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -22,7 +22,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-class RealSubRR : RealMath
+class RealSubRR : public RealMath
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -32,7 +32,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-class RealMulRR : RealMath
+class RealMulRR : public RealMath
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -42,7 +42,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-class RealDivRR : RealMath
+class RealDivRR : public RealMath
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -51,4 +51,4 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
         regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
     }
 };
-#endif //VM7_REAL_H
+#endif //VM7_REALMATH_H

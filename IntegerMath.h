@@ -7,12 +7,12 @@
 
 #include "Commands.h"
 
-class IntegerMath : Math
+class IntegerMath : public Math
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
 };
 
-class IntAddRR : IntegerMath
+class IntAddRR : public IntegerMath
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -20,7 +20,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-class IntSubRR : IntegerMath
+class IntSubRR : public IntegerMath
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -28,7 +28,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-class IntMulRR : IntegerMath
+class IntMulRR : public IntegerMath
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -36,7 +36,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-class IntDivRR : IntegerMath
+class IntDivRR : public IntegerMath
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -45,12 +45,12 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
 };
 /**********************************************************************************************************************/
 
-class UIntegerMath : Math
+class UIntegerMath : public Math
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
 };
 
-class UIntAddRR : IntegerMath
+class UIntAddRR : public IntegerMath
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -60,7 +60,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-class UIntSubRR : IntegerMath
+class UIntSubRR : public IntegerMath
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -70,7 +70,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-class UIntMulRR : IntegerMath
+class UIntMulRR : public IntegerMath
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -80,7 +80,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-class UIntDivRR : IntegerMath
+class UIntDivRR : public IntegerMath
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {

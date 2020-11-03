@@ -77,7 +77,7 @@ class Output : public Command
     }
 };
 
-class Math : Command
+class Math : public Command
 {
     public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
 };

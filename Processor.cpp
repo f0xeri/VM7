@@ -3,6 +3,7 @@
 //
 
 #include "Processor.h"
+#include "IntegerMath.h"
 
 Processor::Processor()
 {
@@ -32,8 +33,12 @@ void Processor::InitCommands()
 {
     commands.assign(128, nullptr);
     commands[stop] = new Stop();
-    commands[ldstr] = new LoadString();
-    commands[prtstr] = new PrintString();
+    commands[iadd] = new IntAddRR();
+    commands[isub] = new IntSubRR();
+    commands[imul] = new IntMulRR();
+    commands[idiv] = new IntDivRR();
+    //commands[ldstr] = new LoadString();
+    //commands[prtstr] = new PrintString();
 }
 
 command16 Processor::GetCommand16(const Memory &mem, unsigned char address)
