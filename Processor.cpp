@@ -63,8 +63,7 @@ void Processor::InitCommands()
 command16 Processor::GetCommand16(const Memory &mem, unsigned char address)
 {
     MemUnion dat{};
-    for (int j = address, k = 0; j < (address + sizeof(MemUnion) / 4); ++j, ++k)
-        dat.bytes[k] = mem.memory[j];
+    std::memcpy(&dat.bytes, &mem.memory[address], 4);
     return dat.cmd16;
 }
 

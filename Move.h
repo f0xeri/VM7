@@ -19,7 +19,6 @@ class MoveRS : public Move
 {
     public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
-        data d = mem.GetData(1);
         regs.grp.LoadData(regs.currentCommand.cmd.r1, mem.GetData(regs.currentCommand.address));
     }
 };
