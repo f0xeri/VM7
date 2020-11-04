@@ -79,22 +79,27 @@ class Output : public Command
 
 class Math : public Command
 {
-    public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
+    public: void operator()(Memory &mem, Registers &regs) const noexcept override {}
 };
 
 class Move : public Command
 {
-    public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
+    public: void operator()(Memory &mem, Registers &regs) const noexcept override {}
 };
 
 class Compare : public Command
 {
-    public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
+    public: void operator()(Memory &mem, Registers &regs) const noexcept override {}
 };
 
-class BitwiseOperations : public Command
+class BinaryOperations : public Command
 {
-    public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
+    public: void operator()(Memory &mem, Registers &regs) const noexcept override {}
+};
+
+class Jumps : public Command
+{
+    public: void operator()(Memory &mem, Registers &regs) const noexcept override {}
 };
 /**********************************************************************************************************************/
 /* тут строки */

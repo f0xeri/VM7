@@ -8,7 +8,8 @@
 #include "RealMath.h"
 #include "Move.h"
 #include "Compare.h"
-#include "BitwiseOperations.h"
+#include "BinaryOperations.h"
+#include "Jump.h"
 
 Processor::Processor()
 {
@@ -71,6 +72,13 @@ void Processor::InitCommands()
     commands[_xor] = new Xor();
     commands[shiftl] = new ShiftL();
     commands[shiftr] = new ShiftR();
+
+    commands[jmp] = new Jump();
+    commands[je] = new Je();
+    commands[jg] = new Jg();
+    commands[jl] = new Jl();
+    commands[ja] = new Ja();
+    commands[jb] = new Jb();
 
     commands[stop] = new Stop();
 }

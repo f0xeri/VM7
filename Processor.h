@@ -31,6 +31,7 @@ public:
     };*/
     enum opcodes
     {
+        stop = 000,
         in = 001, out = 002, icmp = 003, uicmp = 004, rcmp = 005,
         iadd = 010, uiadd = 011, radd = 012,
         isub = 020, uisub = 021, rsub = 022,
@@ -38,7 +39,7 @@ public:
         idiv = 040, uidiv = 041, rdiv = 042, imod = 043, uimod = 044,
         _and = 050, _or = 051, _xor = 052, shiftr = 053, shiftl = 054,
         movrr = 060, movrs = 061, movsr = 062,
-        stop = 077
+        jmp = 070, je = 071, jg = 072, jl = 073, ja = 074, jb = 075
     };
     Memory memory;
     Processor();

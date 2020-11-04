@@ -20,6 +20,7 @@ public:
         unsigned short CF;      // флаг переноса
         unsigned short ZF;      // флаг нуля
         unsigned short SF;      // флаг знака
+        unsigned short OF;      // флаг overflow
         unsigned short IF;      // флаг разрешения прерываний
 
         PSW() : IP(0), CF(0), ZF(0), SF(0), IF(1) {}

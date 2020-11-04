@@ -2,12 +2,12 @@
 // Created by Yaroslav on 04.11.2020.
 //
 
-#ifndef VM7_BITWISEOPERATIONS_H
-#define VM7_BITWISEOPERATIONS_H
+#ifndef VM7_BINARYOPERATIONS_H
+#define VM7_BINARYOPERATIONS_H
 
 #include "Commands.h"
 
-class And : public BitwiseOperations
+class And : public BinaryOperations
 {
     public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -16,7 +16,7 @@ class And : public BitwiseOperations
     }
 };
 
-class Or : public BitwiseOperations
+class Or : public BinaryOperations
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -25,7 +25,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-class Xor : public BitwiseOperations
+class Xor : public BinaryOperations
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -34,7 +34,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-class ShiftL : public BitwiseOperations
+class ShiftL : public BinaryOperations
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -43,7 +43,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-class ShiftR : public  BitwiseOperations
+class ShiftR : public  BinaryOperations
 {
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
@@ -51,4 +51,4 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
         regs.grp.LoadData(regs.currentCommand.cmd.r2, data{res});
     }
 };
-#endif //VM7_BITWISEOPERATIONS_H
+#endif //VM7_BINARYOPERATIONS_H
