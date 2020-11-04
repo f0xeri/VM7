@@ -2,8 +2,8 @@
 // Created by Yaroslav on 04.11.2020.
 //
 
-#ifndef VM7_JUMP_H
-#define VM7_JUMP_H
+#ifndef VM7_JUMPS_H
+#define VM7_JUMPS_H
 
 #include "Commands.h"
 
@@ -60,4 +60,20 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
-#endif //VM7_JUMP_H
+class Call : public Jumps
+{
+public: void operator()(Memory &mem, Registers &regs) const noexcept override
+    {
+        regs.grp.LoadData(regs.currentCommand.cmd.r1, regs.grp.GetData(regs.currentCommand.cmd.r2));
+        regs.psw.IP = regs.currentCommand.address;
+    }
+};
+
+class Return : public Jumps
+{
+public: void operator()(Memory &mem, Registers &regs) const noexcept override
+    {
+        regs.psw.IP = regs.currentCommand.cmd.r1;
+    }
+};
+#endif //VM7_JUMPS_H

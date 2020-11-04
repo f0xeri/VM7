@@ -9,7 +9,7 @@
 #include "Move.h"
 #include "Compare.h"
 #include "BinaryOperations.h"
-#include "Jump.h"
+#include "Jumps.h"
 
 Processor::Processor()
 {
@@ -79,6 +79,8 @@ void Processor::InitCommands()
     commands[jl] = new Jl();
     commands[ja] = new Ja();
     commands[jb] = new Jb();
+    commands[call] = new Call();
+    commands[ret] = new Return();
 
     commands[stop] = new Stop();
 }

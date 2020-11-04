@@ -39,7 +39,7 @@ public:
         idiv = 040, uidiv = 041, rdiv = 042, imod = 043, uimod = 044,
         _and = 050, _or = 051, _xor = 052, shiftr = 053, shiftl = 054,
         movrr = 060, movrs = 061, movsr = 062,
-        jmp = 070, je = 071, jg = 072, jl = 073, ja = 074, jb = 075
+        jmp = 070, je = 071, jg = 072, jl = 073, ja = 074, jb = 075, call = 076, ret = 077
     };
     Memory memory;
     Processor();
