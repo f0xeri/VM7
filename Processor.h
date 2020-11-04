@@ -31,12 +31,12 @@ public:
     };*/
     enum opcodes
     {
-        in = 001, out = 002,
+        in = 001, out = 002, icmp = 003, uicmp = 004, rcmp = 005,
         iadd = 010, uiadd = 011, radd = 012,
         isub = 020, uisub = 021, rsub = 022,
         imul = 030, uimul = 031, rmul = 032,
         idiv = 040, uidiv = 041, rdiv = 042, imod = 043, uimod = 044,
-        iand = 050, ior = 051, ixor = 052,
+        iand = 050, ior = 051, ixor = 052, shiftr = 053, shiftl = 054,
         movrr = 060, movrs = 061, movsr = 062,
         stop = 077
     };

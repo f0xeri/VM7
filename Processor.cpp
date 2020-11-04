@@ -7,6 +7,7 @@
 #include "IntegerMath.h"
 #include "RealMath.h"
 #include "Move.h"
+#include "Compare.h"
 
 Processor::Processor()
 {
@@ -38,6 +39,9 @@ void Processor::InitCommands()
 
     commands[in] = new Input();
     commands[out] = new Output();
+    commands[icmp] = new IntegerCompare();
+    commands[uicmp] = new UIntegerCompare();
+    commands[rcmp] = new RealCompare();
 
     commands[iadd] = new IntAddRR();
     commands[isub] = new IntSubRR();
@@ -61,8 +65,7 @@ void Processor::InitCommands()
     commands[movsr] = new MoveSR();
 
     commands[stop] = new Stop();
-    //commands[ldstr] = new LoadString();
-    //commands[prtstr] = new PrintString();
+
 }
 
 command16 Processor::GetCommand16(const Memory &mem, unsigned char address)

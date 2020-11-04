@@ -87,6 +87,11 @@ class Move : public Command
     public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
 };
 
+class Compare : public Command
+{
+    public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
+};
+
 /**********************************************************************************************************************/
 /* тут строки */
 /*class LoadString : public Command

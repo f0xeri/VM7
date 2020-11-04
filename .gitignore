@@ -1,3 +1,8 @@
 # Project exclude paths
 /cmake-build-debug/
-/.idea
+/cmake-build-release/cmake_install.cmake
+/cmake-build-release/CMakeFiles/
+/cmake-build-release/Makefile
+/cmake-build-release/VM7.cbp
+/cmake-build-release/CMakeCache.txt
+/.idea/
