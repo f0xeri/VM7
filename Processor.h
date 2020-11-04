@@ -36,7 +36,7 @@ public:
         isub = 020, uisub = 021, rsub = 022,
         imul = 030, uimul = 031, rmul = 032,
         idiv = 040, uidiv = 041, rdiv = 042, imod = 043, uimod = 044,
-        iand = 050, ior = 051, ixor = 052, shiftr = 053, shiftl = 054,
+        _and = 050, _or = 051, _xor = 052, shiftr = 053, shiftl = 054,
         movrr = 060, movrs = 061, movsr = 062,
         stop = 077
     };

@@ -8,6 +8,7 @@
 #include "RealMath.h"
 #include "Move.h"
 #include "Compare.h"
+#include "BitwiseOperations.h"
 
 Processor::Processor()
 {
@@ -44,28 +45,34 @@ void Processor::InitCommands()
     commands[rcmp] = new RealCompare();
 
     commands[iadd] = new IntAddRR();
-    commands[isub] = new IntSubRR();
-    commands[imul] = new IntMulRR();
-    commands[idiv] = new IntDivRR();
-    commands[imod] = new IntModRR();
-
     commands[uiadd] = new UIntAddRR();
-    commands[uisub] = new UIntSubRR();
-    commands[uimul] = new UIntMulRR();
-    commands[uidiv] = new UIntDivRR();
-    commands[uimod] = new UIntModRR();
-
     commands[radd] = new RealAddRR();
+
+    commands[isub] = new IntSubRR();
+    commands[uisub] = new UIntSubRR();
     commands[rsub] = new RealSubRR();
+
+    commands[imul] = new IntMulRR();
+    commands[uimul] = new UIntMulRR();
     commands[rmul] = new RealMulRR();
+
+    commands[idiv] = new IntDivRR();
+    commands[uidiv] = new UIntDivRR();
     commands[rdiv] = new RealDivRR();
+    commands[imod] = new IntModRR();
+    commands[uimod] = new UIntModRR();
 
     commands[movrr] = new MoveRR();
     commands[movrs] = new MoveRS();
     commands[movsr] = new MoveSR();
 
-    commands[stop] = new Stop();
+    commands[_and] = new And();
+    commands[_or] = new Or();
+    commands[_xor] = new Xor();
+    commands[shiftl] = new ShiftL();
+    commands[shiftr] = new ShiftR();
 
+    commands[stop] = new Stop();
 }
 
 command16 Processor::GetCommand16(const Memory &mem, unsigned char address)
