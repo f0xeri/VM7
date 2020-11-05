@@ -62,16 +62,16 @@ class Output : public Command
         switch (type)
         {
             case 0:
-                std::cout << mem.GetData(regs.currentCommand.address).integer;
+                std::cout << mem.GetData(regs.currentCommand.address).integer << std::endl;
                 break;
             case 1:
-                std::cout << mem.GetData(regs.currentCommand.address).uinteger;
+                std::cout << mem.GetData(regs.currentCommand.address).uinteger << std::endl;
                 break;
             case 2:
-                std::cout << mem.GetData(regs.currentCommand.address).real;
+                std::cout << mem.GetData(regs.currentCommand.address).real << std::endl;
                 break;
             default:
-                std::cout << mem.GetData(regs.currentCommand.address).integer;
+                std::cout << mem.GetData(regs.currentCommand.address).integer << std::endl;
                 break;
         }
     }
