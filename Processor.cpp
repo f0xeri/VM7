@@ -74,6 +74,8 @@ void Processor::InitCommands()
     commands[shiftr] = new ShiftR();
 
     commands[jmp] = new Jump();
+    commands[jmpr] = new JumpRelative();
+    commands[jmpi] = new JumpIndirect();
     commands[je] = new Je();
     commands[jg] = new Jg();
     commands[jl] = new Jl();

@@ -11,7 +11,28 @@ class Jump : public Jumps
 {
     public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
-        regs.psw.IP = regs.currentCommand.address;
+        if (regs.currentCommand.cmd.r2 == 0b00001)
+            regs.psw.IP = regs.currentCommand.address;
+        else if (regs.currentCommand.cmd.r2 == 0b00011)
+            regs.psw.IP = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger + regs.currentCommand.address;
+    }
+};
+
+class JumpRelative : public Jumps
+{
+public: void operator()(Memory &mem, Registers &regs) const noexcept override
+    {
+        int i = 1;
+        while (i < regs.currentCommand.cmd.r2) i *= 10;
+        regs.psw.IP = regs.currentCommand.cmd.r1 * i + regs.currentCommand.cmd.r2;
+    }
+};
+
+class JumpIndirect : public Jumps
+{
+public: void operator()(Memory &mem, Registers &regs) const noexcept override
+    {
+        regs.psw.IP = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger;
     }
 };
 
