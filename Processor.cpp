@@ -66,6 +66,7 @@ void Processor::InitCommands()
     commands[movrr] = new MoveRR();
     commands[movrs] = new MoveRS();
     commands[movsr] = new MoveSR();
+    commands[loadr] = new LoadRegister();
 
     commands[_and] = new And();
     commands[_or] = new Or();

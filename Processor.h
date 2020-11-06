@@ -27,7 +27,7 @@ public:
         imul = 030, uimul = 031, rmul = 032,
         idiv = 040, uidiv = 041, rdiv = 042, imod = 043, uimod = 044,
         _and = 050, _or = 051, _xor = 052, shiftr = 053, shiftl = 054,
-        movrr = 060, movrs = 061, movsr = 062,
+        movrr = 060, movrs = 061, movsr = 062, loadr = 063,
         jmp = 070, jmpr = 071, jmpi = 072, je = 073, jg = 074, jl = 075, ja = 076, jb = 077,
     };
     Memory memory;

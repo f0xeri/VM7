@@ -31,4 +31,12 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     }
 };
 
+class LoadRegister : public Move
+{
+public: void operator()(Memory &mem, Registers &regs) const noexcept override
+    {
+        regs.grp.LoadData(regs.currentCommand.cmd.r1, data{regs.currentCommand.address});
+    }
+};
+
 #endif //VM7_MOVE_H
