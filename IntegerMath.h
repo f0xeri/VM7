@@ -17,6 +17,7 @@ class IntAddRR : public IntegerMath
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
         regs.grp.LoadData(regs.currentCommand.cmd.r2,data{regs.grp.GetData(regs.currentCommand.cmd.r1).integer + regs.grp.GetData(regs.currentCommand.cmd.r2).integer});
+        regs.psw.SH = 1;
     }
 };
 
@@ -25,6 +26,7 @@ class IntSubRR : public IntegerMath
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
         regs.grp.LoadData(regs.currentCommand.cmd.r2, data{regs.grp.GetData(regs.currentCommand.cmd.r1).integer - regs.grp.GetData(regs.currentCommand.cmd.r2).integer});
+        regs.psw.SH = 1;
     }
 };
 
@@ -33,6 +35,7 @@ class IntMulRR : public IntegerMath
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
         regs.grp.LoadData(regs.currentCommand.cmd.r2, data{regs.grp.GetData(regs.currentCommand.cmd.r1).integer * regs.grp.GetData(regs.currentCommand.cmd.r2).integer});
+        regs.psw.SH = 1;
     }
 };
 
@@ -41,6 +44,7 @@ class IntDivRR : public IntegerMath
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
         regs.grp.LoadData(regs.currentCommand.cmd.r2, data{regs.grp.GetData(regs.currentCommand.cmd.r1).integer / regs.grp.GetData(regs.currentCommand.cmd.r2).integer});
+        regs.psw.SH = 1;
     }
 };
 
@@ -49,6 +53,7 @@ class IntModRR : public IntegerMath
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
         regs.grp.LoadData(regs.currentCommand.cmd.r2, data{regs.grp.GetData(regs.currentCommand.cmd.r1).integer % regs.grp.GetData(regs.currentCommand.cmd.r2).integer});
+        regs.psw.SH = 1;
     }
 };
 /**********************************************************************************************************************/
@@ -65,6 +70,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
         data temp{};
         temp.uinteger = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger + regs.grp.GetData(regs.currentCommand.cmd.r2).uinteger;
         regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
+        regs.psw.SH = 1;
     }
 };
 
@@ -75,6 +81,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
         data temp{};
         temp.uinteger = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger - regs.grp.GetData(regs.currentCommand.cmd.r2).uinteger;
         regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
+        regs.psw.SH = 1;
     }
 };
 
@@ -85,6 +92,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
         data temp{};
         temp.uinteger = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger * regs.grp.GetData(regs.currentCommand.cmd.r2).uinteger;
         regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
+        regs.psw.SH = 1;
     }
 };
 
@@ -95,6 +103,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
         data temp{};
         temp.uinteger = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger / regs.grp.GetData(regs.currentCommand.cmd.r2).uinteger;
         regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
+        regs.psw.SH = 1;
     }
 };
 
@@ -105,6 +114,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
         data temp{};
         temp.uinteger = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger % regs.grp.GetData(regs.currentCommand.cmd.r2).uinteger;
         regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
+        regs.psw.SH = 1;
     }
 };
 

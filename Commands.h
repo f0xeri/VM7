@@ -20,6 +20,7 @@ protected:
     }
 public:
     virtual void operator()(Memory &mem, Registers &regs) const noexcept = 0;
+    //virtual int size() const noexcept = 0;
 };
 
 class Stop : public Command
@@ -48,6 +49,7 @@ class Input : public Command
                 break;
         }
         mem.LoadData(regs.currentCommand.address, temp);
+        regs.psw.SH = 0;
     }
 };
 
@@ -68,6 +70,7 @@ class Output : public Command
                 std::cout << mem.GetData(regs.currentCommand.address).real << std::endl;
                 break;
         }
+        regs.psw.SH = 0;
     }
 };
 

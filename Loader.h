@@ -76,6 +76,13 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
                 cmd16.r2 = r2;
                 if (!ss.eof())
                 {
+                    // если предыдущая команда короткая, загружаем её в память и меняем loadAddress
+                    if (memUnion.data_.integer != 0)
+                    {
+                        cpu.memory.LoadData(loadAddress, memUnion, 1);
+                        memUnion = {};
+                        loadAddress += sizeof(MemUnion) / 4;
+                    }
                     ss >> address;
                     cmd32.cmd = cmd16;
                     cmd32.address = address;
@@ -94,6 +101,7 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
                         memUnion.cmd16[1] = cmd16;
                         cpu.memory.LoadData(loadAddress, memUnion, 1);
                         loadAddress += sizeof(MemUnion) / 4;
+                        memUnion = {};
                     }
                 }
                 break;

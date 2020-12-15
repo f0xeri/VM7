@@ -34,6 +34,7 @@ class IntegerCompare : public Compare
             regs.psw.SF = 0;
             regs.psw.CF = 0;
         }
+        regs.psw.SH = 1;
     }
 };
 
@@ -63,6 +64,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
             regs.psw.SF = 0;
             regs.psw.CF = 0;
         }
+        regs.psw.SH = 1;
     }
 };
 
@@ -93,6 +95,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
             regs.psw.SF = 0;
             regs.psw.CF = 0;
         }
+        regs.psw.SH = 1;
     }
 };
 

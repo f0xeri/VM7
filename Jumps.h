@@ -15,6 +15,7 @@ class Jump : public Jumps
             regs.psw.IP = regs.currentCommand.address;
         else if (regs.currentCommand.cmd.r2 == 0b00011)
             regs.psw.IP = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger + regs.currentCommand.address;
+        regs.psw.SH = 1;
     }
 };
 
@@ -25,6 +26,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
         int i = 1;
         while (i < regs.currentCommand.cmd.r2) i *= 10;
         regs.psw.IP = regs.currentCommand.cmd.r1 * i + regs.currentCommand.cmd.r2;
+        regs.psw.SH = 0;
     }
 };
 
@@ -33,6 +35,7 @@ class JumpIndirect : public Jumps
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
         regs.psw.IP = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger;
+        regs.psw.SH = 0;
     }
 };
 
@@ -69,6 +72,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
         if (regs.psw.ZF == 0 && regs.psw.CF == 0)
             regs.psw.IP = regs.currentCommand.address;
+        regs.psw.SH = 0;
     }
 };
 
@@ -78,6 +82,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
         if (regs.psw.CF == 1)
             regs.psw.IP = regs.currentCommand.address;
+        regs.psw.SH = 0;
     }
 };
 
@@ -87,6 +92,7 @@ public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
         regs.grp.LoadData(regs.currentCommand.cmd.r1, regs.grp.GetData(regs.currentCommand.cmd.r2));
         regs.psw.IP = regs.currentCommand.address;
+        regs.psw.SH = 0;
     }
 };
 
@@ -95,6 +101,7 @@ class Return : public Jumps
 public: void operator()(Memory &mem, Registers &regs) const noexcept override
     {
         regs.psw.IP = regs.currentCommand.cmd.r1;
+        regs.psw.SH = 1;
     }
 };
 #endif //VM7_JUMPS_H

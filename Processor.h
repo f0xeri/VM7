@@ -37,7 +37,7 @@ public:
     void SetIP(unsigned short address);
 
     command16 GetCommand16(const Memory &mem, unsigned char address);
-    command32 GetCommand(const Memory &mem, unsigned char address);
+    MemUnion GetCommand(const Memory &mem, unsigned char address);
 };
 
 

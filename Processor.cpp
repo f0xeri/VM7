@@ -21,9 +21,14 @@ void Processor::Run()
     while (regs.psw.IF != 0)
     {
         auto currentCmd = GetCommand(memory, regs.psw.IP);
-        regs.currentCommand = currentCmd;
-        if (currentCmd.cmd.opcode)
-            commands[currentCmd.cmd.opcode]->operator()(memory, regs);
+        regs.currentCommand = currentCmd.cmd32;
+        if (currentCmd.cmd32.cmd.opcode)
+        {
+            commands[currentCmd.cmd32.cmd.opcode]->operator()(memory, regs);
+            if (regs.psw.SH == 1)
+                if (currentCmd.cmd16[1].opcode)
+                    commands[currentCmd.cmd16[1].opcode]->operator()(memory, regs);
+        }
         else
             regs.psw.IF = 0;
         regs.psw.IP += 1; // sizeof(MemUnion) / 4
@@ -95,8 +100,8 @@ command16 Processor::GetCommand16(const Memory &mem, unsigned char address)
     return dat.cmd16[0];
 }
 
-command32 Processor::GetCommand(const Memory &mem, unsigned char address) {
+MemUnion Processor::GetCommand(const Memory &mem, unsigned char address) {
     MemUnion dat{};
     std::memcpy(&dat.bytes, &mem.memory[address], 4);
-    return dat.cmd32;
+    return dat;
 }
