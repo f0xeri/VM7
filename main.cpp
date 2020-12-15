@@ -4,7 +4,7 @@
 int main()
 {
     Processor cpu;
-    Load("test2.txt", cpu);
+    Load("program.txt", cpu);
     cpu.Run();
     return 0;
 }

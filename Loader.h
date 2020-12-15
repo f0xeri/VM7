@@ -9,6 +9,7 @@
 #include <fstream>
 #include <exception>
 #include <sstream>
+#include <algorithm>
 #include "Types.h"
 #include "Processor.h"
 
@@ -45,8 +46,14 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
 
     while (std::getline(file, line))
     {
-        memUnion = {};
         dat = {};
+        auto pos = line.find(';');
+        if (pos != std::string::npos) line.erase(pos, line.length());
+        auto end = std::unique(line.begin(), line.end(), [](char l, char r){
+            return std::isspace(l) && std::isspace(r);
+        });
+        line = std::string(line.begin(), *end == ' ' ? (end - 1) : end);
+
         ss.clear();
         ss.str(line);
         ss >> prefix;
@@ -67,7 +74,6 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
                 cmd16.opcode = opcode;
                 cmd16.r1 = r1;
                 cmd16.r2 = r2;
-
                 if (!ss.eof())
                 {
                     ss >> address;
@@ -75,13 +81,21 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
                     cmd32.address = address;
                     memUnion.cmd32 = cmd32;
                     cpu.memory.LoadData(loadAddress, memUnion, 1);
+                    memUnion = {};
+                    loadAddress += sizeof(MemUnion) / 4;
                 }
                 else
                 {
-                    memUnion.cmd16 = cmd16;
-                    cpu.memory.LoadData(loadAddress, memUnion, 1);
+                    std::cout << ss.str() << std::endl;
+                    if (memUnion.cmd16[0].opcode == 0)
+                        memUnion.cmd16[0] = cmd16;
+                    else if (memUnion.cmd16[1].opcode == 0)
+                    {
+                        memUnion.cmd16[1] = cmd16;
+                        cpu.memory.LoadData(loadAddress, memUnion, 1);
+                        loadAddress += sizeof(MemUnion) / 4;
+                    }
                 }
-                loadAddress += sizeof(MemUnion) / 4;
                 break;
             case prefixes::integer:
                 ss >> dat.integer;

@@ -46,9 +46,6 @@ class Input : public Command
             case 2:
                 std::cin >> temp.real;
                 break;
-            default:
-                std::cin >> temp.integer;
-                break;
         }
         mem.LoadData(regs.currentCommand.address, temp);
     }
@@ -69,9 +66,6 @@ class Output : public Command
                 break;
             case 2:
                 std::cout << mem.GetData(regs.currentCommand.address).real << std::endl;
-                break;
-            default:
-                std::cout << mem.GetData(regs.currentCommand.address).integer << std::endl;
                 break;
         }
     }

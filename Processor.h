@@ -14,8 +14,8 @@
 
 class Processor
 {
-    Registers regs;
     std::vector<Command*> commands;
+    void InitCommands();
 
 public:
     enum opcodes
@@ -31,10 +31,10 @@ public:
         jmp = 070, jmpr = 071, jmpi = 072, je = 073, jg = 074, jl = 075, ja = 076, jb = 077,
     };
     Memory memory;
+    Registers regs;
     Processor();
     void Run();
     void SetIP(unsigned short address);
-    void InitCommands();
 
     command16 GetCommand16(const Memory &mem, unsigned char address);
     command32 GetCommand(const Memory &mem, unsigned char address);

@@ -92,7 +92,7 @@ command16 Processor::GetCommand16(const Memory &mem, unsigned char address)
 {
     MemUnion dat{};
     std::memcpy(&dat.bytes, &mem.memory[address], 4);
-    return dat.cmd16;
+    return dat.cmd16[0];
 }
 
 command32 Processor::GetCommand(const Memory &mem, unsigned char address) {

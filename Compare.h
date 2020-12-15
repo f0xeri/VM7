@@ -18,7 +18,6 @@ class IntegerCompare : public Compare
         else regs.psw.OF = 0;
         if (regs.grp.GetData(regs.currentCommand.cmd.r1).integer == regs.grp.GetData(regs.currentCommand.cmd.r2).integer)
         {
-
             regs.psw.ZF = 1;
             regs.psw.SF = 0;
             regs.psw.CF = 0;

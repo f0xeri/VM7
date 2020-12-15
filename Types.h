@@ -30,7 +30,7 @@ union data
 union MemUnion
 {
     data data_;
-    command16 cmd16;
+    command16 cmd16[2];
     command32 cmd32;
     unsigned char bytes[4];
 };
