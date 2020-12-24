@@ -27,7 +27,7 @@ union data
     float real;
 };
 
-union MemUnion
+union word
 {
     data data_;
     command16 cmd16[2];

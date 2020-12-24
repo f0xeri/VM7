@@ -9,112 +9,112 @@
 
 class IntegerMath : public Math
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override {};
 };
 
 class IntAddRR : public IntegerMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
-        regs.grp.LoadData(regs.currentCommand.cmd.r2,data{regs.grp.GetData(regs.currentCommand.cmd.r1).integer + regs.grp.GetData(regs.currentCommand.cmd.r2).integer});
-        regs.psw.SH = 1;
+        regs[regs.currentCommand.cmd.r2] = data{regs[regs.currentCommand.cmd.r1].integer + regs[regs.currentCommand.cmd.r2].integer};
+        psw.SH = 1;
     }
 };
 
 class IntSubRR : public IntegerMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, data{regs.grp.GetData(regs.currentCommand.cmd.r1).integer - regs.grp.GetData(regs.currentCommand.cmd.r2).integer});
-        regs.psw.SH = 1;
+        regs[regs.currentCommand.cmd.r2] = data{regs[regs.currentCommand.cmd.r1].integer - regs[regs.currentCommand.cmd.r2].integer};
+        psw.SH = 1;
     }
 };
 
 class IntMulRR : public IntegerMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, data{regs.grp.GetData(regs.currentCommand.cmd.r1).integer * regs.grp.GetData(regs.currentCommand.cmd.r2).integer});
-        regs.psw.SH = 1;
+        regs[regs.currentCommand.cmd.r2] = data{regs[regs.currentCommand.cmd.r1].integer * regs[regs.currentCommand.cmd.r2].integer};
+        psw.SH = 1;
     }
 };
 
 class IntDivRR : public IntegerMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, data{regs.grp.GetData(regs.currentCommand.cmd.r1).integer / regs.grp.GetData(regs.currentCommand.cmd.r2).integer});
-        regs.psw.SH = 1;
+        regs[regs.currentCommand.cmd.r2] = data{regs[regs.currentCommand.cmd.r1].integer / regs[regs.currentCommand.cmd.r2].integer};
+        psw.SH = 1;
     }
 };
 
 class IntModRR : public IntegerMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, data{regs.grp.GetData(regs.currentCommand.cmd.r1).integer % regs.grp.GetData(regs.currentCommand.cmd.r2).integer});
-        regs.psw.SH = 1;
+        regs[regs.currentCommand.cmd.r2] = data{regs[regs.currentCommand.cmd.r1].integer % regs[regs.currentCommand.cmd.r2].integer};
+        psw.SH = 1;
     }
 };
 /**********************************************************************************************************************/
 
 class UIntegerMath : public Math
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override {};
 };
 
 class UIntAddRR : public IntegerMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
         data temp{};
-        temp.uinteger = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger + regs.grp.GetData(regs.currentCommand.cmd.r2).uinteger;
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
-        regs.psw.SH = 1;
+        temp.uinteger = regs[regs.currentCommand.cmd.r1].uinteger + regs[regs.currentCommand.cmd.r2].uinteger;
+        regs[regs.currentCommand.cmd.r2] =  temp;
+        psw.SH = 1;
     }
 };
 
 class UIntSubRR : public IntegerMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
         data temp{};
-        temp.uinteger = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger - regs.grp.GetData(regs.currentCommand.cmd.r2).uinteger;
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
-        regs.psw.SH = 1;
+        temp.uinteger = regs[regs.currentCommand.cmd.r1].uinteger - regs[regs.currentCommand.cmd.r2].uinteger;
+        regs[regs.currentCommand.cmd.r2] =  temp;
+        psw.SH = 1;
     }
 };
 
 class UIntMulRR : public IntegerMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
         data temp{};
-        temp.uinteger = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger * regs.grp.GetData(regs.currentCommand.cmd.r2).uinteger;
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
-        regs.psw.SH = 1;
+        temp.uinteger = regs[regs.currentCommand.cmd.r1].uinteger * regs[regs.currentCommand.cmd.r2].uinteger;
+        regs[regs.currentCommand.cmd.r2] =  temp;
+        psw.SH = 1;
     }
 };
 
 class UIntDivRR : public IntegerMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
         data temp{};
-        temp.uinteger = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger / regs.grp.GetData(regs.currentCommand.cmd.r2).uinteger;
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
-        regs.psw.SH = 1;
+        temp.uinteger = regs[regs.currentCommand.cmd.r1].uinteger / regs[regs.currentCommand.cmd.r2].uinteger;
+        regs[regs.currentCommand.cmd.r2] =  temp;
+        psw.SH = 1;
     }
 };
 
 class UIntModRR : public IntegerMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
         data temp{};
-        temp.uinteger = regs.grp.GetData(regs.currentCommand.cmd.r1).uinteger % regs.grp.GetData(regs.currentCommand.cmd.r2).uinteger;
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
-        regs.psw.SH = 1;
+        temp.uinteger = regs[regs.currentCommand.cmd.r1].uinteger % regs[regs.currentCommand.cmd.r2].uinteger;
+        regs[regs.currentCommand.cmd.r2] =  temp;
+        psw.SH = 1;
     }
 };
 

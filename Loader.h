@@ -34,7 +34,7 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
     command32 cmd32{};
     std::stringstream ss;
 
-    MemUnion memUnion{};
+    word memUnion{};
     data dat{};
     unsigned short opcode;
     unsigned short r1;
@@ -79,45 +79,44 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
                     // если предыдущая команда короткая, загружаем её в память и меняем loadAddress
                     if (memUnion.data_.integer != 0)
                     {
-                        cpu.memory.LoadData(loadAddress, memUnion, 1);
+                        cpu.memory[loadAddress] = memUnion;
                         memUnion = {};
-                        loadAddress += sizeof(MemUnion) / 4;
+                        loadAddress += sizeof(memUnion) / 4;
                     }
                     ss >> address;
                     cmd32.cmd = cmd16;
                     cmd32.address = address;
                     memUnion.cmd32 = cmd32;
-                    cpu.memory.LoadData(loadAddress, memUnion, 1);
+                    cpu.memory[loadAddress] = memUnion;
                     memUnion = {};
-                    loadAddress += sizeof(MemUnion) / 4;
+                    loadAddress += sizeof(memUnion) / 4;
                 }
                 else
                 {
-                    std::cout << ss.str() << std::endl;
                     if (memUnion.cmd16[0].opcode == 0)
                         memUnion.cmd16[0] = cmd16;
                     else if (memUnion.cmd16[1].opcode == 0)
                     {
                         memUnion.cmd16[1] = cmd16;
-                        cpu.memory.LoadData(loadAddress, memUnion, 1);
-                        loadAddress += sizeof(MemUnion) / 4;
+                        cpu.memory[loadAddress] = memUnion;
+                        loadAddress += sizeof(memUnion) / 4;
                         memUnion = {};
                     }
                 }
                 break;
             case prefixes::integer:
                 ss >> dat.integer;
-                cpu.memory.LoadData(loadAddress, dat);
+                cpu.memory[loadAddress] = word{dat};
                 loadAddress += sizeof(dat) / 4;
                 break;
             case prefixes::uinteger:
                 ss >> dat.uinteger;
-                cpu.memory.LoadData(loadAddress, dat);
+                cpu.memory[loadAddress] = word{dat};
                 loadAddress += sizeof(dat) / 4;
                 break;
             case prefixes::real:
                 ss >> dat.real;
-                cpu.memory.LoadData(loadAddress, dat);
+                cpu.memory[loadAddress] = word{dat};
                 loadAddress += sizeof(dat) / 4;
                 break;
             case prefixes::comment:

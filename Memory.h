@@ -12,14 +12,13 @@
 class Memory
 {
 public:
-    Memory() { memory = new MemUnion[65536]{}; }
+    Memory() { memory = new word[65536]{}; }
     ~Memory() { delete[] memory; }
 
-    void LoadData(uint16_t address, const data &dat);
-    void LoadData(uint16_t a, MemUnion dat, int n);
-    data GetData(uint16_t address) noexcept;
-
-    MemUnion *memory;
+    word &operator[](uint32_t idx) {
+        return memory[idx];
+    };
+    word *memory;
 };
 
 

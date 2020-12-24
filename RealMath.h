@@ -9,46 +9,46 @@
 
 class RealMath : public Math
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override {};
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override {};
 };
 
 class RealAddRR : public RealMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
         data temp{};
-        temp.real = regs.grp.GetData(regs.currentCommand.cmd.r1).real + regs.grp.GetData(regs.currentCommand.cmd.r2).real;
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
+        temp.real = regs[regs.currentCommand.cmd.r1].real + regs[regs.currentCommand.cmd.r2].real;
+        regs[regs.currentCommand.cmd.r2] = temp;
     }
 };
 
 class RealSubRR : public RealMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
         data temp{};
-        temp.real = regs.grp.GetData(regs.currentCommand.cmd.r1).real - regs.grp.GetData(regs.currentCommand.cmd.r2).real;
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
+        temp.real = regs[regs.currentCommand.cmd.r1].real - regs[regs.currentCommand.cmd.r2].real;
+        regs[regs.currentCommand.cmd.r2] = temp;
     }
 };
 
 class RealMulRR : public RealMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
         data temp{};
-        temp.real = regs.grp.GetData(regs.currentCommand.cmd.r1).real * regs.grp.GetData(regs.currentCommand.cmd.r2).real;
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
+        temp.real = regs[regs.currentCommand.cmd.r1].real * regs[regs.currentCommand.cmd.r2].real;
+        regs[regs.currentCommand.cmd.r2] = temp;
     }
 };
 
 class RealDivRR : public RealMath
 {
-public: void operator()(Memory &mem, Registers &regs) const noexcept override
+public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
         data temp{};
-        temp.real = regs.grp.GetData(regs.currentCommand.cmd.r1).real / regs.grp.GetData(regs.currentCommand.cmd.r2).real;
-        regs.grp.LoadData(regs.currentCommand.cmd.r2, temp);
+        temp.real = regs[regs.currentCommand.cmd.r1].real / regs[regs.currentCommand.cmd.r2].real;
+        regs[regs.currentCommand.cmd.r2] = temp;
     }
 };
 #endif //VM7_REALMATH_H

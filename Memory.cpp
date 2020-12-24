@@ -5,20 +5,20 @@
 #include <cstring>
 #include "Memory.h"
 
-void Memory::LoadData(uint16_t address, const data &dat)
+/*void Memory::loadData(uint16_t address, const data &dat)
 {
-    MemUnion res{dat};
+    word res{dat};
     std::memcpy(&memory[address], res.bytes, 4);
 }
 
-data Memory::GetData(uint16_t address) noexcept
+data Memory::getData(uint16_t address) noexcept
 {
-    MemUnion res{};
+    word res{};
     std::memcpy(&res.bytes, &memory[address], 4);
     return res.data_;
 }
 
-void Memory::LoadData(uint16_t address, MemUnion dat, int n)
+void Memory::loadData(uint16_t a, word dat, int n)
 {
-    std::memcpy(&memory[address], dat.bytes, 4);
-}
+    std::memcpy(&memory[a], dat.bytes, 4);
+}*/

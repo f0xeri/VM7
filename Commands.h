@@ -10,29 +10,29 @@
 #include "Types.h"
 #include "Memory.h"
 #include "Registers.h"
+#include "PSW.h"
+#include "Processor.h"
+
+class Processor;
 
 class Command
 {
-protected:
-    unsigned short GetAddress(const Registers &regs) const noexcept
-    {
-        return regs.currentCommand.address;
-    }
+
 public:
-    virtual void operator()(Memory &mem, Registers &regs) const noexcept = 0;
+    virtual void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept = 0;
     //virtual int size() const noexcept = 0;
 };
 
 class Stop : public Command
 {
-    public: void operator()(Memory &mem, Registers &regs) const noexcept override {}
+    public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override {}
 };
 
 // in type 0 address
 // in 1 0 32000
 class Input : public Command
 {
-    public: void operator()(Memory &mem, Registers &regs) const noexcept override
+    public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
         auto type = regs.currentCommand.cmd.r1;
         data temp{};
@@ -48,86 +48,55 @@ class Input : public Command
                 std::cin >> temp.real;
                 break;
         }
-        mem.LoadData(regs.currentCommand.address, temp);
-        regs.psw.SH = 0;
+        mem[regs.currentCommand.address] = word{temp};
+        psw.SH = 0;
     }
 };
 
 class Output : public Command
 {
-    public: void operator()(Memory &mem, Registers &regs) const noexcept override
+    public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
     {
         auto type = regs.currentCommand.cmd.r1;
         switch (type)
         {
             case 0:
-                std::cout << mem.GetData(regs.currentCommand.address).integer << std::endl;
+                std::cout << mem[regs.currentCommand.address].data_.integer << std::endl;
                 break;
             case 1:
-                std::cout << mem.GetData(regs.currentCommand.address).uinteger << std::endl;
+                std::cout << mem[regs.currentCommand.address].data_.uinteger << std::endl;
                 break;
             case 2:
-                std::cout << mem.GetData(regs.currentCommand.address).real << std::endl;
+                std::cout << mem[regs.currentCommand.address].data_.real << std::endl;
                 break;
         }
-        regs.psw.SH = 0;
+        psw.SH = 0;
     }
 };
 
 class Math : public Command
 {
-    public: void operator()(Memory &mem, Registers &regs) const noexcept override {}
+    public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override {}
 };
 
 class Move : public Command
 {
-    public: void operator()(Memory &mem, Registers &regs) const noexcept override {}
+    public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override {}
 };
 
 class Compare : public Command
 {
-    public: void operator()(Memory &mem, Registers &regs) const noexcept override {}
+    public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override {}
 };
 
 class BinaryOperations : public Command
 {
-    public: void operator()(Memory &mem, Registers &regs) const noexcept override {}
+    public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override {}
 };
 
 class Jumps : public Command
 {
-    public: void operator()(Memory &mem, Registers &regs) const noexcept override {}
-};
-/**********************************************************************************************************************/
-/* тут строки */
-/*class LoadString : public Command
-{
-public:
-    void operator()(Memory &mem, Registers &regs) const noexcept override
-    {
-        std::string temp{};
-        std::cout << std::endl;
-        std::cin >> temp;
-
-        data strSz{};
-        strSz.integer = static_cast<int>(temp.size());
-        regs.grp.LoadData(regs.currentCommand.cmd.r1, strSz);
-        unsigned short loadAddress = GetAddress(regs);
-        for (int i = 0; i < strSz.integer; ++i)
-            mem.LoadData(i + loadAddress, data{temp[i]});
-    }
+    public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override {}
 };
 
-class PrintString : public Command
-{
-public:
-    void operator()(Memory &mem, Registers &regs) const noexcept override
-    {
-        unsigned short printAddress = GetAddress(regs);
-        data strSz{};
-        strSz = regs.grp.GetData(regs.currentCommand.cmd.r2);
-        for (int i = 0; i < strSz.integer; ++i)
-            std::cout << (char)mem.GetData(i + printAddress).integer;
-    }
-};*/
 #endif //VM7_COMMANDS_H

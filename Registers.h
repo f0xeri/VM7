@@ -13,38 +13,10 @@
 class Registers
 {
 public:
-    class PSW
-    {
-    public:
-        unsigned short IP;
-        unsigned short CF;      // флаг переноса
-        unsigned short ZF;      // флаг нуля
-        unsigned short SF;      // флаг знака
-        unsigned short OF;      // флаг overflow
-        unsigned short IF;
-        unsigned short SH;      // флаг короткой команды (выставляется 1 короткой командой, 0 длинной)
-
-        PSW() : IP(0), CF(0), ZF(0), SF(0), IF(1) {}
-
-        void resetFlags() noexcept { ZF = 0; CF = 0; SF = 0; IF = 1; }
-    } psw{};
-
-// РОН
-class GRP
-{
-    int32_t grp[32]{};
-    class RegisterNotExists : std::exception{};
-    public:
-        void LoadData(uint8_t grpNumber, const data &dat)
-        {
-            grpNumber >= 32 ? throw RegisterNotExists() : grp[grpNumber] = dat.integer;
-        };
-        data GetData(uint8_t grpNumber)
-        {
-            if (grpNumber >= 32) throw RegisterNotExists();
-            return data{grp[grpNumber]};
-        };
-    } grp{};
+    data grp[32]{};
+    data &operator[](uint8_t n) {
+        return grp[n];
+    }
     command32 currentCommand{};
 };
 

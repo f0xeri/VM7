@@ -18,26 +18,26 @@ Processor::Processor()
 
 void Processor::Run()
 {
-    while (regs.psw.IF != 0)
+    while (psw.IF != 0)
     {
-        auto currentCmd = GetCommand(memory, regs.psw.IP);
+        auto currentCmd = memory[psw.IP];
         regs.currentCommand = currentCmd.cmd32;
         if (currentCmd.cmd32.cmd.opcode)
         {
-            commands[currentCmd.cmd32.cmd.opcode]->operator()(memory, regs);
-            if (regs.psw.SH == 1)
+            commands[currentCmd.cmd32.cmd.opcode]->operator()(psw, memory, regs);
+            if (psw.SH == 1)
                 if (currentCmd.cmd16[1].opcode)
-                    commands[currentCmd.cmd16[1].opcode]->operator()(memory, regs);
+                    commands[currentCmd.cmd16[1].opcode]->operator()(psw, memory, regs);
         }
         else
-            regs.psw.IF = 0;
-        regs.psw.IP += 1; // sizeof(MemUnion) / 4
+            psw.IF = 0;
+        psw.IP += 1; // sizeof(word) / 4
     }
 }
 
 void Processor::SetIP(unsigned short address)
 {
-    regs.psw.IP = address;
+    psw.IP = address;
 }
 
 void Processor::InitCommands()
@@ -93,15 +93,3 @@ void Processor::InitCommands()
     commands[stop] = new Stop();
 }
 
-command16 Processor::GetCommand16(const Memory &mem, unsigned char address)
-{
-    MemUnion dat{};
-    std::memcpy(&dat.bytes, &mem.memory[address], 4);
-    return dat.cmd16[0];
-}
-
-MemUnion Processor::GetCommand(const Memory &mem, unsigned char address) {
-    MemUnion dat{};
-    std::memcpy(&dat.bytes, &mem.memory[address], 4);
-    return dat;
-}

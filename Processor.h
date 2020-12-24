@@ -10,6 +10,7 @@
 #include "Commands.h"
 #include "Registers.h"
 #include "Memory.h"
+#include "PSW.h"
 
 
 class Processor
@@ -32,12 +33,10 @@ public:
     };
     Memory memory;
     Registers regs;
+    PSW psw;
     Processor();
     void Run();
     void SetIP(unsigned short address);
-
-    command16 GetCommand16(const Memory &mem, unsigned char address);
-    MemUnion GetCommand(const Memory &mem, unsigned char address);
 };
 
 
