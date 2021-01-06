@@ -9,37 +9,37 @@
 
 class MoveRR : public Move
 {
-    public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+    public: void operator()(Processor &cpu) noexcept override
     {
-        regs[regs.currentCommand.cmd.r1] = regs[regs.currentCommand.cmd.r2];
-        psw.SH = 0;
+        cpu.regs[cpu.currentCommand.cmd.r1] = cpu.regs[cpu.currentCommand.cmd.r2];
+        cpu.shrt = 0;
     }
 };
 
 class MoveRS : public Move
 {
-    public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+    public: void operator()(Processor &cpu) noexcept override
     {
-        regs[regs.currentCommand.cmd.r1] = mem[regs.currentCommand.address].data_;
-        psw.SH = 0;
+        cpu.regs[cpu.currentCommand.cmd.r1] = cpu.memory[cpu.currentCommand.address].data_;
+        cpu.shrt = 0;
     }
 };
 
 class MoveSR : public Move
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
-        mem[regs.currentCommand.address] = word{regs[regs.currentCommand.cmd.r1]};
-        psw.SH = 0;
+        cpu.memory[cpu.currentCommand.address] = word{cpu.regs[cpu.currentCommand.cmd.r1]};
+        cpu.shrt = 0;
     }
 };
 
 class LoadRegister : public Move
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
-        regs[regs.currentCommand.cmd.r1] = data{regs.currentCommand.address};
-        psw.SH = 0;
+        cpu.regs[cpu.currentCommand.cmd.r1] = data{cpu.currentCommand.address};
+        cpu.shrt = 0;
     }
 };
 

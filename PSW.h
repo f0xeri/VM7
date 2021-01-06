@@ -13,12 +13,10 @@ public:
     unsigned short ZF;      // флаг нуля
     unsigned short SF;      // флаг знака
     unsigned short OF;      // флаг overflow
-    unsigned short IF;
-    unsigned short SH;      // флаг короткой команды (выставляется 1 короткой командой, 0 длинной)
 
-    PSW() : IP(0), CF(0), ZF(0), SF(0), IF(1) {}
+    PSW() : IP(0), CF(0), ZF(0), SF(0){}
 
-    void resetFlags() noexcept { ZF = 0; CF = 0; SF = 0; IF = 1; }
+    void resetFlags() noexcept { ZF = 0; CF = 0; SF = 0; }
 };
 
 #endif //VM7_PSW_H

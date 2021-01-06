@@ -17,7 +17,6 @@ public:
     data &operator[](uint8_t n) {
         return grp[n];
     }
-    command32 currentCommand{};
 };
 
 

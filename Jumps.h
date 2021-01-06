@@ -9,99 +9,99 @@
 
 class Jump : public Jumps
 {
-    public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+    public: void operator()(Processor &cpu) noexcept override
     {
-        if (regs.currentCommand.cmd.r2 == 0b00001)
-            psw.IP = regs.currentCommand.address;
-        else if (regs.currentCommand.cmd.r2 == 0b00011)
-            psw.IP = regs[regs.currentCommand.cmd.r1].uinteger + regs.currentCommand.address;
-        psw.SH = 1;
+        if (cpu.currentCommand.cmd.r2 == 0b00001)
+            cpu.psw.IP = cpu.currentCommand.address;
+        else if (cpu.currentCommand.cmd.r2 == 0b00011)
+            cpu.psw.IP = cpu.regs[cpu.currentCommand.cmd.r1].uinteger + cpu.currentCommand.address;
+        cpu.shrt = 1;
     }
 };
 
 class JumpRelative : public Jumps
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
         int i = 1;
-        while (i < regs.currentCommand.cmd.r2) i *= 10;
-        psw.IP = regs.currentCommand.cmd.r1 * i + regs.currentCommand.cmd.r2;
-        psw.SH = 0;
+        while (i < cpu.currentCommand.cmd.r2) i *= 10;
+        cpu.psw.IP = cpu.currentCommand.cmd.r1 * i + cpu.currentCommand.cmd.r2;
+        cpu.shrt = 0;
     }
 };
 
 class JumpIndirect : public Jumps
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
-        psw.IP = regs[regs.currentCommand.cmd.r1].uinteger;
-        psw.SH = 0;
+        cpu.psw.IP = cpu.regs[cpu.currentCommand.cmd.r1].uinteger;
+        cpu.shrt = 0;
     }
 };
 
 class Je : public Jumps
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
-        if (psw.ZF == 1)
-            psw.IP = regs.currentCommand.address;
+        if (cpu.psw.ZF == 1)
+            cpu.psw.IP = cpu.currentCommand.address;
     }
 };
 
 class Jg : public Jumps
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
-        if (psw.ZF == 0 && psw.SF == psw.OF)
-            psw.IP = regs.currentCommand.address;
+        if (cpu.psw.ZF == 0 && cpu.psw.SF == cpu.psw.OF)
+            cpu.psw.IP = cpu.currentCommand.address;
     }
 };
 
 class Jl : public Jumps
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
-        if (psw.ZF == 0 && psw.SF != psw.OF)
-            psw.IP = regs.currentCommand.address;
+        if (cpu.psw.ZF == 0 && cpu.psw.SF != cpu.psw.OF)
+            cpu.psw.IP = cpu.currentCommand.address;
     }
 };
 
 class Ja : public Jumps
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
-        if (psw.ZF == 0 && psw.CF == 0)
-            psw.IP = regs.currentCommand.address;
-        psw.SH = 0;
+        if (cpu.psw.ZF == 0 && cpu.psw.CF == 0)
+            cpu.psw.IP = cpu.currentCommand.address;
+        cpu.shrt = 0;
     }
 };
 
 class Jb : public Jumps
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
-        if (psw.CF == 1)
-            psw.IP = regs.currentCommand.address;
-        psw.SH = 0;
+        if (cpu.psw.CF == 1)
+            cpu.psw.IP = cpu.currentCommand.address;
+        cpu.shrt = 0;
     }
 };
 
 class Call : public Jumps
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
-        regs[regs.currentCommand.cmd.r1] = regs[regs.currentCommand.cmd.r2];
-        psw.IP = regs.currentCommand.address;
-        psw.SH = 0;
+        cpu.regs[cpu.currentCommand.cmd.r1] = cpu.regs[cpu.currentCommand.cmd.r2];
+        cpu.psw.IP = cpu.currentCommand.address;
+        cpu.shrt = 0;
     }
 };
 
 class Return : public Jumps
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
-        psw.IP = regs.currentCommand.cmd.r1;
-        psw.SH = 1;
+        cpu.psw.IP = cpu.currentCommand.cmd.r1;
+        cpu.shrt = 1;
     }
 };
 #endif //VM7_JUMPS_H

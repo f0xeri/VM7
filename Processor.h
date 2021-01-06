@@ -7,11 +7,11 @@
 
 #include <cstdint>
 #include <vector>
-#include "Commands.h"
 #include "Registers.h"
 #include "Memory.h"
 #include "PSW.h"
 
+class Command;
 
 class Processor
 {
@@ -34,9 +34,13 @@ public:
     Memory memory;
     Registers regs;
     PSW psw;
+    command32 currentCommand;
+    bool stp = false;
+    bool shrt = false;
     Processor();
     void Run();
     void SetIP(unsigned short address);
+    void reset();
 };
 
 

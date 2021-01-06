@@ -18,20 +18,20 @@ Processor::Processor()
 
 void Processor::Run()
 {
-    while (psw.IF != 0)
+    while (!stp)
     {
         auto currentCmd = memory[psw.IP];
-        regs.currentCommand = currentCmd.cmd32;
+        currentCommand = currentCmd.cmd32;
         if (currentCmd.cmd32.cmd.opcode)
         {
-            commands[currentCmd.cmd32.cmd.opcode]->operator()(psw, memory, regs);
-            if (psw.SH == 1)
+            commands[currentCmd.cmd32.cmd.opcode]->operator()(*this);
+            if (shrt == 1)
                 if (currentCmd.cmd16[1].opcode)
-                    commands[currentCmd.cmd16[1].opcode]->operator()(psw, memory, regs);
+                    commands[currentCmd.cmd16[1].opcode]->operator()(*this);
         }
         else
-            psw.IF = 0;
-        psw.IP += 1; // sizeof(word) / 4
+            stp = true;
+        psw.IP += 1;
     }
 }
 
@@ -91,5 +91,10 @@ void Processor::InitCommands()
     commands[ret] = new Return();
 
     commands[stop] = new Stop();
+}
+
+void Processor::reset() {
+    psw.resetFlags();
+    memory.memory = new word[65536]{};
 }
 

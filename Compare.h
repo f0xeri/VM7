@@ -10,92 +10,72 @@
 
 class IntegerCompare : public Compare
 {
-    public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+    public: void operator()(Processor &cpu) noexcept override
     {
         int temp = 0;
-        if (__builtin_sub_overflow(regs[regs.currentCommand.cmd.r1].integer, regs[regs.currentCommand.cmd.r2].integer, &temp))
-            psw.OF = 1;
-        else psw.OF = 0;
-        if (regs[regs.currentCommand.cmd.r1].integer == regs[regs.currentCommand.cmd.r2].integer)
+        if (__builtin_sub_overflow(cpu.regs[cpu.currentCommand.cmd.r1].integer, cpu.regs[cpu.currentCommand.cmd.r2].integer, &temp))
+            cpu.psw.OF = 1;
+        else cpu.psw.OF = 0;
+        if (cpu.regs[cpu.currentCommand.cmd.r1].integer == cpu.regs[cpu.currentCommand.cmd.r2].integer)
         {
-            psw.ZF = 1;
-            psw.SF = 0;
-            psw.CF = 0;
+            cpu.psw.ZF = 1;
+            cpu.psw.SF = 0;
+            cpu.psw.CF = 0;
         }
-        else if (regs[regs.currentCommand.cmd.r1].integer < regs[regs.currentCommand.cmd.r2].integer)
+        else if (cpu.regs[cpu.currentCommand.cmd.r1].integer < cpu.regs[cpu.currentCommand.cmd.r2].integer)
         {
-            psw.ZF = 0;
-            psw.SF = 1;
-            psw.CF = 1;
+            cpu.psw.ZF = 0;
+            cpu.psw.SF = 1;
+            cpu.psw.CF = 1;
         }
         else
         {
-            psw.ZF = 0;
-            psw.SF = 0;
-            psw.CF = 0;
+            cpu.psw.ZF = 0;
+            cpu.psw.SF = 0;
+            cpu.psw.CF = 0;
         }
-        psw.SH = 1;
+        cpu.shrt = 1;
     }
 };
 
 class UIntegerCompare : public Compare
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
         unsigned int temp = 0;
-        if (__builtin_sub_overflow(regs[regs.currentCommand.cmd.r1].integer, regs[regs.currentCommand.cmd.r2].integer, &temp))
-            psw.OF = 1;
-        else psw.OF = 0;
-        if (regs[regs.currentCommand.cmd.r1].uinteger == regs[regs.currentCommand.cmd.r2].uinteger)
+        if (__builtin_sub_overflow(cpu.regs[cpu.currentCommand.cmd.r1].integer, cpu.regs[cpu.currentCommand.cmd.r2].integer, &temp))
+            cpu.psw.OF = 1;
+        else cpu.psw.OF = 0;
+        if (cpu.regs[cpu.currentCommand.cmd.r1].uinteger == cpu.regs[cpu.currentCommand.cmd.r2].uinteger)
         {
-            psw.ZF = 1;
-            psw.SF = 0;
-            psw.CF = 0;
+            cpu.psw.ZF = 1;
+            cpu.psw.SF = 0;
+            cpu.psw.CF = 0;
         }
-        else if (regs[regs.currentCommand.cmd.r1].uinteger < regs[regs.currentCommand.cmd.r2].uinteger)
+        else if (cpu.regs[cpu.currentCommand.cmd.r1].uinteger < cpu.regs[cpu.currentCommand.cmd.r2].uinteger)
         {
-            psw.ZF = 0;
-            psw.SF = 1;
-            psw.CF = 1;
+            cpu.psw.ZF = 0;
+            cpu.psw.SF = 1;
+            cpu.psw.CF = 1;
         }
         else
         {
-            psw.ZF = 0;
-            psw.SF = 0;
-            psw.CF = 0;
+            cpu.psw.ZF = 0;
+            cpu.psw.SF = 0;
+            cpu.psw.CF = 0;
         }
-        psw.SH = 1;
+        cpu.shrt = 1;
     }
 };
 
 class RealCompare : public Compare
 {
-public: void operator()(PSW &psw, Memory &mem, Registers &regs) const noexcept override
+public: void operator()(Processor &cpu) noexcept override
     {
-        std::feclearexcept(FE_OVERFLOW);
-        auto temp = regs[regs.currentCommand.cmd.r1].real - regs[regs.currentCommand.cmd.r2].real;
-        if ((bool)std::fetestexcept(FE_OVERFLOW))
-            psw.OF = 1;
-        else psw.OF = 0;
-        if ((regs[regs.currentCommand.cmd.r1].real - regs[regs.currentCommand.cmd.r2].real) < std::numeric_limits<float>::epsilon())
-        {
-            psw.ZF = 1;
-            psw.SF = 0;
-            psw.CF = 0;
-        }
-        else if (regs[regs.currentCommand.cmd.r1].real < regs[regs.currentCommand.cmd.r2].real)
-        {
-            psw.ZF = 0;
-            psw.SF = 1;
-            psw.CF = 1;
-        }
-        else
-        {
-            psw.ZF = 0;
-            psw.SF = 0;
-            psw.CF = 0;
-        }
-        psw.SH = 1;
+        if (cpu.regs[cpu.currentCommand.cmd.r1].real > cpu.regs[cpu.currentCommand.cmd.r2].real) { cpu.psw.CF = 0; cpu.psw.ZF = 0; }
+        else if (cpu.regs[cpu.currentCommand.cmd.r1].real < cpu.regs[cpu.currentCommand.cmd.r2].real) { cpu.psw.CF = 1; cpu.psw.ZF = 0; }
+        else { cpu.psw.CF = 0; cpu.psw.ZF = 1; }
+        cpu.shrt = 1;
     }
 };
 
