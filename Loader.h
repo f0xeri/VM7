@@ -69,7 +69,7 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
         ss.clear();
         ss.str(line);
         ss >> prefix;
-
+        //std::cout << line << "\n";
         switch (prefix)
         {
             case prefixes::ip:

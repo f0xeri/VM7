@@ -27,7 +27,10 @@ void Processor::Run()
             commands[currentCmd.cmd32.cmd.opcode]->operator()(*this);
             if (shrt == 1)
                 if (currentCmd.cmd16[1].opcode)
+                {
+                    currentCommand = {currentCmd.cmd16[1]};
                     commands[currentCmd.cmd16[1].opcode]->operator()(*this);
+                }
         }
         else
             stp = true;
