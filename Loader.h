@@ -10,6 +10,7 @@
 #include <exception>
 #include <sstream>
 #include <algorithm>
+#include <iostream>
 #include "Types.h"
 #include "Processor.h"
 
@@ -28,6 +29,12 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
 {
     std::ifstream file(filename);
 
+    if (!file.is_open())
+    {
+        std::cerr << "ERROR: failed to open " << filename << "\n";
+        return;
+    }
+
     std::string line;
     char prefix;
     command16 cmd16{};
@@ -44,7 +51,10 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
     unsigned short loadAddress = 0;
     unsigned short ip = 0;
 
-    while (std::getline(file, line))
+    bool err = false;
+    uint32_t lineNumber = 0;
+
+    while (std::getline(file, line) && !err)
     {
         dat = {};
         auto pos = line.find(';');
@@ -53,6 +63,8 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
             return std::isspace(l) && std::isspace(r);
         });
         line = std::string(line.begin(), *end == ' ' ? (end - 1) : end);
+
+        if (line.empty()) continue;
 
         ss.clear();
         ss.str(line);
@@ -120,10 +132,13 @@ inline void Load(const std::string &filename, Processor &cpu) noexcept
                 loadAddress += sizeof(dat) / 4;
                 break;
             case prefixes::comment:
+                break;
             default:
-                continue;
+                err = true;
         }
+        lineNumber++;
     }
+    if (err) std::cerr << "ERROR: invalid syntax at " << lineNumber << " line\n";
 }
 
 #endif //VM7_LOADER_H

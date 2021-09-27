@@ -31,7 +31,8 @@ void Processor::Run()
         }
         else
             stp = true;
-        psw.IP += 1;
+        if (!ipch) psw.IP += 1;
+        ipch = 0;
     }
 }
 
@@ -76,6 +77,7 @@ void Processor::InitCommands()
     commands[_and] = new And();
     commands[_or] = new Or();
     commands[_xor] = new Xor();
+    commands[_not] = new Not();
     commands[shiftl] = new ShiftL();
     commands[shiftr] = new ShiftR();
 

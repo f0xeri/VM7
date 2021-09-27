@@ -102,11 +102,6 @@ public: void operator()(Processor &cpu) noexcept override
 };
 /**********************************************************************************************************************/
 
-class UIntegerMath : public Math
-{
-public: void operator()(Processor &cpu) noexcept override {};
-};
-
 class UIntAddRR : public IntegerMath
 {
 public: void operator()(Processor &cpu) noexcept override

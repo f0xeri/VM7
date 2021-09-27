@@ -7,6 +7,15 @@
 
 #include "Commands.h"
 
+class Not : public BinaryOperations
+{
+public: void operator()(Processor &cpu) noexcept override
+    {
+        auto res = !cpu.regs[cpu.currentCommand.cmd.r1].integer;
+        cpu.regs[cpu.currentCommand.cmd.r2] = data{res};
+    }
+};
+
 class And : public BinaryOperations
 {
     public: void operator()(Processor &cpu) noexcept override
